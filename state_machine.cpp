@@ -9,7 +9,7 @@ StateMachine<T>::step()
 	{
 		if (transition.event->happens)
 		{
-			if (transition.targetState == current)
+			if (transition.targetState == nullptr)
 			{
 				transition.action;
 			}

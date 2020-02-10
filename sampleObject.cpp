@@ -6,33 +6,45 @@ class SampleObject : BaseObject, StateMachine<SampleObject>
 public:
 	float x, y;
 	char c;
-	SampleObject()
-	{
-		//Events
-		//rootEvent = Event<SampleObject>();
-		rootEvent.owner = this;
-		rootEvent.check = &SampleObject::update;
-		std::vector<Event<SampleObject> *> temp
+	SampleObject() : 
+	rootEvent(
+		this,
+		&SampleObject::update,
+		std::vector<Event<SampleObject>*>
 		{
 			&is_on_screen_event,
 			&input_event
-		};
-		rootEvent.children = temp;
+		}
+	),
+	is_on_screen_event(
+		this,
+		&SampleObject::is_on_screen
+	),
+	is_off_screen_event(
+		this,
+		&SampleObject::is_off_screen
+	),
+	input_event(
+		this,
+		&SampleObject::input
+	),
 
-		is_on_screen_event.owner = this;
-		is_on_screen_event.check = &SampleObject::is_on_screen;
+	basicState(
+		std::vector<Transition<SampleObject>>
+		{
+			Transition<SampleObject>(
+				&rootEvent,
+				&SampleObject::noth
+			),
+			Transition<SampleObject>
+			(
+				&is_off_screen_event,
+				&SampleObject::endgame
+			)
 
-
-		input_event.owner = this;
-		input_event.check = &SampleObject::input;
-		//States
-		basicState.transitions.push_back(Transition<SampleObject>(
-			&rootEvent,
-			&basicState,
-			&SampleObject::noth
-		)
-		);
-	};
+		}
+	)
+	{};
 
 public:
 	bool update()
@@ -51,40 +63,13 @@ public:
 	{
 		return c!=' ';
 	}
-	Event<SampleObject> rootEvent = Event<SampleObject>(
-		this,
-		update,
-		std::vector
-		{
-			&is_on_screen_event,
-			&input_event
-		}
-	);
-	Event<SampleObject> is_on_screen_event = Event<SampleObject>(
-		this,
-		is_on_screen
-	);
-	Event<SampleObject> is_off_screen_event = Event<SampleObject>(
-		this,
-		is_off_screen
-	);
-	Event<SampleObject> input_event = Event<SampleObject>(
-		this,
-		input
-	);
-	State<SampleObject> basicState = State<SampleObject>(
-		std::vector
-		{
-			Transition<SampleObject>(
-				&rootEvent,
-				&SampleObject::noth
-			),
-			Transition<SampleObject>
-			(
-				&is_on_screen_event,
-
-			)
-
-		}
-	);
+	void endgame()
+	{
+		exit(0);
+	}
+	Event<SampleObject> rootEvent;
+	Event<SampleObject> is_on_screen_event;
+	Event<SampleObject> is_off_screen_event;
+	Event<SampleObject> input_event;
+	State<SampleObject> basicState;
 };

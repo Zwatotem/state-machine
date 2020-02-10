@@ -1,4 +1,4 @@
-#include <algorithm>
+#include <bits/stdc++.h>
 
 template<class T>
 class Event
@@ -6,7 +6,8 @@ class Event
 public:
 	Event();
 	Event(T*);
-	Event(T*,bool (T::*) (),std::vector<Event*>);
+	Event(T*,bool (T::*) (), std::vector<Event<T>*>);
+	// Event(T*,bool (T::*) (), std::vector<Event<T>*, std::allocator<Event<T>>>);
 	Event(T*,bool (T::*) ());
 	bool happens;
 	T* owner;

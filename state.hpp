@@ -1,14 +1,19 @@
-#include <bits/stdc++.h>
 #include "event.cpp"
 template <class T>
 class State;
 template <class T>
 struct Transition
 {
-	Transition(Event<T>* evt, void (T::* act)(), State<T>* trgSt = this)
+	Transition(Event<T>* evt, void (T::* act)(), State<T>* trgSt)
 	{
 		event = evt;
 		targetState = trgSt;
+		action = act;
+	};
+	Transition(Event<T>* evt, void (T::* act)())
+	{
+		event = evt;
+		targetState = nullptr;
 		action = act;
 	};
 	Event<T>* event;

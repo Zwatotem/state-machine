@@ -1,6 +1,4 @@
-#include <algorithm>
-#include <bits/stdc++.h>
-#include "state.hpp"
+#include "state.cpp"
 
 template <class T>
 class StateMachine
