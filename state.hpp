@@ -5,7 +5,7 @@ class State;
 template <class T>
 struct Transition
 {
-	Transition(Event<T>* evt, State<T>* trgSt, void (T::* act)())
+	Transition(Event<T>* evt, void (T::* act)(), State<T>* trgSt = this)
 	{
 		event = evt;
 		targetState = trgSt;
@@ -21,6 +21,7 @@ class State
 public:
 	State(){};
 	State(int i){id=i;};
+	State(std::vector<Transition<T>>);
 	int id;
 	std::vector<Transition<T>> transitions;
 };
