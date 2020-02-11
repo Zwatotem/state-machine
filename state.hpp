@@ -4,13 +4,13 @@ class State;
 template <class T>
 struct Transition
 {
-	Transition(Event<T>* evt, void (T::* act)(), State<T>* trgSt)
+	Transition(Event<T>* evt, std::vector<void (T::*)()> act, State<T>* trgSt)
 	{
 		event = evt;
 		targetState = trgSt;
 		action = act;
 	};
-	Transition(Event<T>* evt, void (T::* act)())
+	Transition(Event<T>* evt, std::vector<void (T::*)()> act)
 	{
 		event = evt;
 		targetState = nullptr;
@@ -18,7 +18,7 @@ struct Transition
 	};
 	Event<T>* event;
 	State<T>* targetState;
-	void (T::*action)();
+	std::vector<void (T::*)()> action;
 };
 template <class T>
 class State
@@ -26,7 +26,10 @@ class State
 public:
 	State(){};
 	State(int i){id=i;};
-	State(std::vector<Transition<T>>);
+	State(std::vector<Transition<T>> table)
+	{
+		transitions = table;
+	}
 	int id;
 	std::vector<Transition<T>> transitions;
 };

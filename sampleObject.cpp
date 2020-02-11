@@ -34,14 +34,19 @@ public:
 		{
 			Transition<SampleObject>(
 				&rootEvent,
-				&SampleObject::noth
+				std::vector<void (SampleObject::*)()>
+				{
+					&SampleObject::noth
+				}
 			),
 			Transition<SampleObject>
 			(
 				&is_off_screen_event,
-				&SampleObject::endgame
+				std::vector<void (SampleObject::*)()>
+				{
+					&SampleObject::endgame
+				}
 			)
-
 		}
 	)
 	{};

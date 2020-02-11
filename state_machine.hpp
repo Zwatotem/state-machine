@@ -1,4 +1,4 @@
-#include "state.cpp"
+#include "state.hpp"
 
 template <class T>
 class StateMachine

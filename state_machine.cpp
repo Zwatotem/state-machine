@@ -9,13 +9,12 @@ StateMachine<T>::step()
 	{
 		if (transition.event->happens)
 		{
-			if (transition.targetState == nullptr)
+			for (auto &&act : transition.action)
 			{
-				transition.action;
+				act();
 			}
-			else
+			if (transition.targetState != nullptr)
 			{
-				transition.action;
 				current = transition.targetState;
 				break;
 			}
